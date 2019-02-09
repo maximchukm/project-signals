@@ -18,16 +18,16 @@ public class Signal {
         this.data = data;
     }
 
+    public String getChannel() {
+        return channel;
+    }
+
     public String getOperation() {
         return operation;
     }
 
     public Object getData() {
         return data;
-    }
-
-    public String getChannel() {
-        return channel;
     }
 
 }
