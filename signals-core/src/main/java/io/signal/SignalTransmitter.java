@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  */
 public interface SignalTransmitter {
 
-    void emit(Signal signal);
+    void transmit(Signal signal);
 
     Flux<Signal> tune(String channel);
 
@@ -28,9 +28,9 @@ public interface SignalTransmitter {
         private Flux<Signal> flux = Flux.create(fluxEmitter);
 
         @Override
-        public void emit(Signal signal) {
+        public void transmit(Signal signal) {
             fluxEmitter.emit(signal);
-            logger.debug("Emitted signal " + signal);
+            logger.debug("Transmitted signal " + signal);
         }
 
         @Override
