@@ -15,7 +15,7 @@ public interface SignalTransmitter {
 
     Channel getChannel();
 
-    void transmit(Signal signal);
+    void transmit(Signal<?> signal);
 
     void shutdown();
 
@@ -37,7 +37,7 @@ public interface SignalTransmitter {
         }
 
         @Override
-        public void transmit(Signal signal) {
+        public void transmit(Signal<?> signal) {
             signalEmitter.emit(signal);
             logger.debug("Transmitted signal " + signal);
         }
@@ -48,16 +48,16 @@ public interface SignalTransmitter {
             signalEmitter.stop();
         }
 
-        private static class FluxEmitter implements Consumer<FluxSink<Signal>> {
+        private static class FluxEmitter implements Consumer<FluxSink<Signal<?>>> {
 
-            private FluxSink<Signal> fluxSink;
+            private FluxSink<Signal<?>> fluxSink;
 
             @Override
-            public void accept(FluxSink<Signal> signalFluxSink) {
+            public void accept(FluxSink<Signal<?>> signalFluxSink) {
                 this.fluxSink = signalFluxSink;
             }
 
-            void emit(Signal signal) {
+            void emit(Signal<?> signal) {
                 fluxSink.next(signal);
             }
 

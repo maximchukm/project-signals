@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * date 12/13/19
  */
 @Component
-public class FirstChannelReceiver implements SignalReceiver {
+public class FirstChannelReceiver implements SignalReceiver<String> {
 
     private final Logger logger = LoggerFactory.getLogger(FirstChannelReceiver.class);
 
@@ -21,7 +21,12 @@ public class FirstChannelReceiver implements SignalReceiver {
     }
 
     @Override
-    public void receive(Signal signal) {
+    public Class<String> getMessageClass() {
+        return String.class;
+    }
+
+    @Override
+    public void receive(Signal<String> signal) {
         logger.info(String.format("signal with id %s is received: %s", signal.getId(), signal.getMessage()));
     }
 }

@@ -10,9 +10,9 @@ public class Channel {
 
     private final String name;
 
-    private final Flux<Signal> transmission;
+    private final Flux<Signal<?>> transmission;
 
-    public Channel(String name, Flux<Signal> transmission) {
+    public Channel(String name, Flux<Signal<?>> transmission) {
         this.name = name;
         this.transmission = transmission;
     }
@@ -21,7 +21,7 @@ public class Channel {
         return name;
     }
 
-    public Flux<Signal> getTransmission() {
+    public Flux<Signal<?>> getTransmission() {
         return transmission;
     }
 }

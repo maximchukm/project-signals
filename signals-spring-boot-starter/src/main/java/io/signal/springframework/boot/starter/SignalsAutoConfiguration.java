@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public class SignalsAutoConfiguration {
 
-    public SignalsAutoConfiguration(List<SignalTransmitter> transmitters, List<SignalReceiver> receivers) {
+    public SignalsAutoConfiguration(List<SignalTransmitter> transmitters, List<SignalReceiver<?>> receivers) {
         final Map<String, SignalTransmitter> transmitterMap =
                 transmitters.stream()
                         .collect(
