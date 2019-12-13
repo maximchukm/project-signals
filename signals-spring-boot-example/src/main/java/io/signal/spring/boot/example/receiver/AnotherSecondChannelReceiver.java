@@ -1,7 +1,8 @@
-package io.signal.test.receiver;
+package io.signal.spring.boot.example.receiver;
 
 import io.signal.Signal;
 import io.signal.SignalReceiver;
+import io.signal.spring.boot.example.transmitter.SecondChannelTransmitter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -11,13 +12,11 @@ import org.springframework.stereotype.Component;
  * date 12/13/19
  */
 @Component
-public class FirstChannelReceiver implements SignalReceiver<String> {
+public class AnotherSecondChannelReceiver implements SignalReceiver<String> {
+    private final Logger logger = LoggerFactory.getLogger(AnotherSecondChannelReceiver.class);
 
-    private final Logger logger = LoggerFactory.getLogger(FirstChannelReceiver.class);
-
-    @Override
-    public String getChannelName() {
-        return "first";
+    public AnotherSecondChannelReceiver(SecondChannelTransmitter transmitter) {
+        tune(transmitter.getChannel());
     }
 
     @Override

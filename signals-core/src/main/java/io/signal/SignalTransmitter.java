@@ -58,7 +58,9 @@ public interface SignalTransmitter {
             }
 
             void emit(Signal<?> signal) {
-                fluxSink.next(signal);
+                if (fluxSink != null) {
+                    fluxSink.next(signal);
+                }
             }
 
             void stop() {
