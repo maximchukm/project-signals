@@ -1,33 +1,32 @@
 package io.signal;
 
+import java.util.UUID;
+
 /**
  * @author Maxim Maximchuk
  * created on 08.02.2019
  */
-public class Signal {
+final public class Signal {
 
-    private String channel;
+    private String id;
 
-    private String operation;
+    private Object message;
 
-    private Object data;
-
-    public Signal(String channel, String operation, Object data) {
-        this.channel = channel;
-        this.operation = operation;
-        this.data = data;
+    public Signal(String id, Object data) {
+        this.id = id;
+        this.message = data;
     }
 
-    public String getChannel() {
-        return channel;
+    public String getId() {
+        return id;
     }
 
-    public String getOperation() {
-        return operation;
+    public Object getMessage() {
+        return message;
     }
 
-    public Object getData() {
-        return data;
+    public static Signal message(Object message) {
+        return new Signal(UUID.randomUUID().toString(), message);
     }
 
 }

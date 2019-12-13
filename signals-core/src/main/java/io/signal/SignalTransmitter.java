@@ -13,40 +13,42 @@ import java.util.function.Consumer;
  */
 public interface SignalTransmitter {
 
-    void transmit(Signal signal);
+    Channel getChannel();
 
-    Flux<Signal> tune(String channel);
+    void transmit(Signal signal);
 
     void shutdown();
 
-    class DefaultSignalTransmitter implements SignalTransmitter {
+    abstract class AbstractSignalTransmitter implements SignalTransmitter {
 
-        private Logger logger = LoggerFactory.getLogger(SignalTransmitter.class);
+        private final Logger logger = LoggerFactory.getLogger(SignalTransmitter.class);
 
-        private FluxEmitter fluxEmitter = new FluxEmitter();
+        private final FluxEmitter signalEmitter = new FluxEmitter();
 
-        private Flux<Signal> flux = Flux.create(fluxEmitter);
+        private final Channel channel;
 
-        @Override
-        public void transmit(Signal signal) {
-            fluxEmitter.emit(signal);
-            logger.debug("Transmitted signal " + signal);
+        public AbstractSignalTransmitter(String channelName) {
+            this.channel = new Channel(channelName, Flux.create(signalEmitter).share());
         }
 
         @Override
-        public Flux<Signal> tune(String channel) {
-            Flux<Signal> tunedFlux = flux.share().filter(signal -> signal.getChannel().equals(channel));
-            logger.info("Tuned on channel " + channel);
-            return tunedFlux;
+        public Channel getChannel() {
+            return channel;
+        }
+
+        @Override
+        public void transmit(Signal signal) {
+            signalEmitter.emit(signal);
+            logger.debug("Transmitted signal " + signal);
         }
 
         @Override
         public void shutdown() {
             logger.info("Shutdown procedure initiated. Stopping transmitting");
-            fluxEmitter.stop();
+            signalEmitter.stop();
         }
 
-        private class FluxEmitter implements Consumer<FluxSink<Signal>> {
+        private static class FluxEmitter implements Consumer<FluxSink<Signal>> {
 
             private FluxSink<Signal> fluxSink;
 
