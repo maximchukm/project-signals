@@ -10,7 +10,7 @@ public interface SignalReceiver<T> {
 
     void receive(Signal<T> signal);
 
-    default void tune(Channel channel) {
+    default SignalReceiver<T> tune(Channel channel) {
         channel.getTransmission()
                 .filter(signal -> getMessageClass().isAssignableFrom(signal.getMessage().getClass()))
                 .subscribe(signal ->
@@ -18,6 +18,7 @@ public interface SignalReceiver<T> {
                                 new Signal<>(signal.getId(), getMessageClass().cast(signal.getMessage()))
                         )
                 );
+        return this;
     }
 
 }
