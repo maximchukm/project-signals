@@ -21,7 +21,7 @@ public interface SignalTransmitter {
 
     abstract class AbstractSignalTransmitter implements SignalTransmitter {
 
-        private final Logger logger = LoggerFactory.getLogger(SignalTransmitter.class);
+        private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
         private final FluxEmitter signalEmitter = new FluxEmitter();
 
@@ -39,7 +39,7 @@ public interface SignalTransmitter {
         @Override
         public void transmit(Signal<?> signal) {
             signalEmitter.emit(signal);
-            logger.debug("Transmitted signal " + signal);
+            logger.debug(String.format("Transmitted signal %s", signal));
         }
 
         @Override
@@ -58,11 +58,15 @@ public interface SignalTransmitter {
             }
 
             void emit(Signal<?> signal) {
-                fluxSink.next(signal);
+                if (fluxSink != null) {
+                    fluxSink.next(signal);
+                }
             }
 
             void stop() {
-                fluxSink.complete();
+                if (fluxSink != null) {
+                    fluxSink.complete();
+                }
             }
         }
     }

@@ -9,10 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>signals-spring-boot-starter</artifactId>
+    <artifactId>signals-spring-boot-example</artifactId>
 
     <properties>
         <spring-boot.version>3.1.2</spring-boot.version>
+        <slf4j.version>2.0.7</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -30,27 +31,26 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>io.projectsignals</groupId>
-            <artifactId>signals-core</artifactId>
+            <artifactId>signals-spring-boot-starter</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <scope>provided</scope>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>provided</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
+
     </dependencies>
 
 

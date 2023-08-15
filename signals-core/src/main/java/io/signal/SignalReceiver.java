@@ -6,8 +6,6 @@ package io.signal;
  */
 public interface SignalReceiver<T> {
 
-    String getChannelName();
-
     Class<T> getMessageClass();
 
     void receive(Signal<T> signal);

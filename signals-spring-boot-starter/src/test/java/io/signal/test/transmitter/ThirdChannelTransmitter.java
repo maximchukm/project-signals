@@ -9,9 +9,9 @@ import jakarta.annotation.PreDestroy;
  * date 12/13/19
  */
 @Transmitter
-public class FirstChannelTransmitter extends SignalTransmitter.AbstractSignalTransmitter {
-    public FirstChannelTransmitter() {
-        super("first");
+public class ThirdChannelTransmitter extends SignalTransmitter.AbstractSignalTransmitter {
+    public ThirdChannelTransmitter() {
+        super("third");
     }
 
     @PreDestroy

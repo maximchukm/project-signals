@@ -1,4 +1,4 @@
-package io.signal.test.transmitter;
+package io.signal.spring.boot.example.transmitter;
 
 import io.signal.SignalTransmitter;
 import io.signal.springframework.boot.annotation.Transmitter;

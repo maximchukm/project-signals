@@ -1,8 +1,7 @@
-package io.signal.test.receiver;
+package io.signal.plain.application.example.receiver;
 
 import io.signal.Signal;
 import io.signal.SignalReceiver;
-import io.signal.springframework.boot.annotation.Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,10 +9,7 @@ import org.slf4j.LoggerFactory;
  * @author Maksym Maksymchuk
  * date 12/13/19
  */
-@Receiver(channelName = "second")
 public class SecondChannelReceiver implements SignalReceiver<String> {
-
-    private String receivedMessage;
     private final Logger logger = LoggerFactory.getLogger(SecondChannelReceiver.class);
 
     @Override
@@ -23,11 +19,6 @@ public class SecondChannelReceiver implements SignalReceiver<String> {
 
     @Override
     public void receive(Signal<String> signal) {
-        receivedMessage = signal.getMessage();
-        logger.info(String.format("signal with id %s is received: %s", signal.getId(), receivedMessage));
-    }
-
-    public String getReceivedMessage() {
-        return receivedMessage;
+        logger.info(String.format("signal with id %s is received: %s", signal.getId(), signal.getMessage()));
     }
 }
