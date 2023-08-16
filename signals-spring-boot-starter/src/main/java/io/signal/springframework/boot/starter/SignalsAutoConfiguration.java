@@ -4,6 +4,7 @@ import io.signal.SignalReceiver;
 import io.signal.SignalTransmitter;
 import io.signal.springframework.boot.annotation.Receiver;
 import io.signal.springframework.boot.annotation.Transmitter;
+import jakarta.annotation.PreDestroy;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
@@ -18,8 +19,10 @@ import java.util.stream.Collectors;
 @Configuration
 public class SignalsAutoConfiguration {
 
+    private final Map<String, SignalTransmitter> transmittersMap;
+
     public SignalsAutoConfiguration(List<SignalTransmitter> transmitters, List<SignalReceiver<?>> receivers) {
-        final Map<String, SignalTransmitter> transmitterMap =
+        transmittersMap =
                 transmitters.stream()
                         .filter(it -> it.getClass().isAnnotationPresent(Transmitter.class))
                         .collect(
@@ -32,11 +35,16 @@ public class SignalsAutoConfiguration {
                 .stream()
                 .filter(it -> it.getClass().isAnnotationPresent(Receiver.class))
                 .forEach(r -> {
-                            SignalTransmitter transmitter = transmitterMap.get(r.getClass().getAnnotation(Receiver.class).channelName());
+                            SignalTransmitter transmitter = transmittersMap.get(r.getClass().getAnnotation(Receiver.class).channelName());
                             if (transmitter != null) {
                                 r.tune(transmitter.getChannel());
                             }
                         }
                 );
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        transmittersMap.values().forEach(SignalTransmitter::shutdown);
     }
 }

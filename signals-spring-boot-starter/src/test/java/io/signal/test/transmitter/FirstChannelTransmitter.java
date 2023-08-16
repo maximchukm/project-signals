@@ -1,6 +1,6 @@
 package io.signal.test.transmitter;
 
-import io.signal.SignalTransmitter;
+import io.signal.DefaultSignalTransmitter;
 import io.signal.springframework.boot.annotation.Transmitter;
 import jakarta.annotation.PreDestroy;
 
@@ -9,7 +9,7 @@ import jakarta.annotation.PreDestroy;
  * date 12/13/19
  */
 @Transmitter
-public class FirstChannelTransmitter extends SignalTransmitter.AbstractSignalTransmitter {
+public class FirstChannelTransmitter extends DefaultSignalTransmitter {
     public FirstChannelTransmitter() {
         super("first");
     }
