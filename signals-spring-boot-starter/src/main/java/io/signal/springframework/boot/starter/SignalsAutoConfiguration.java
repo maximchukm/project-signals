@@ -4,6 +4,7 @@ import io.signal.SignalReceiver;
 import io.signal.SignalTransmitter;
 import io.signal.springframework.boot.annotation.Receiver;
 import io.signal.springframework.boot.annotation.Transmitter;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
  * @author Maxim Maximchuk
  * created on 08.02.2019
  */
+@Configuration
 public class SignalsAutoConfiguration {
 
     public SignalsAutoConfiguration(List<SignalTransmitter> transmitters, List<SignalReceiver<?>> receivers) {
