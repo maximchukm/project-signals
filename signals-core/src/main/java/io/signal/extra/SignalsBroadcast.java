@@ -73,6 +73,12 @@ public final class SignalsBroadcast {
             return this;
         }
 
+        public Builder withTransmitter(SignalTransmitter transmitter) {
+            transmitters.add(transmitter);
+            channels.put(transmitter.getChannel().getName(), transmitter.getChannel());
+            return this;
+        }
+
         public Builder withTransformingChain(String channelName,
                                              UnaryOperator<SignalTransformingChain> chainConfigFunc) {
             SignalTransformingChain chain =
