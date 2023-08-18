@@ -8,6 +8,8 @@ public interface SignalReceiver<T> {
 
     Class<T> getMessageClass();
 
+    boolean filter(Signal<T> signal);
+
     void receive(Signal<T> signal);
 
     void tune(Channel channel);

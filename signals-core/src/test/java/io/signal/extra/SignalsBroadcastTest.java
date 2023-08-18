@@ -53,6 +53,8 @@ class SignalsBroadcastTest {
 
         assertEquals(2, originalSignal.getMessage());
         assertEquals(19, calculatedSignal.getMessage());
+
+        broadcast.shutdown();
     }
 
 }

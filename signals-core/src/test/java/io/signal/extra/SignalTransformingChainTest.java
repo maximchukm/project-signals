@@ -12,10 +12,10 @@ class SignalTransformingChainTest {
 
     @Test
     void testChaining() {
-        DefaultSignalTransmitter numberGenerator = new DefaultSignalTransmitter("number-generator");
+        DefaultSignalTransmitter transmitter = new DefaultSignalTransmitter("number-generator");
 
         SignalTransformingChain chain =
-                SignalTransformingChain.from(numberGenerator.getChannel())
+                SignalTransformingChain.from(transmitter.getChannel())
                         .add(new MultiplicationTransformer(3))
                         .add(new AdditionTransformer(15));
 
@@ -25,8 +25,9 @@ class SignalTransformingChainTest {
                         assertEquals(45, signal.getMessage())
         ).tune(chain.getChannel());
 
-        numberGenerator.transmit(Signal.message(10));
+        transmitter.transmit(Signal.message(10));
 
+        transmitter.shutdown();
     }
 
     abstract class MathTransformer implements SignalTransformer<Integer> {
@@ -41,8 +42,8 @@ class SignalTransformingChainTest {
         }
 
         @Override
-        public Signal<Object> transform(Signal<Integer> inputSignal) {
-            return Signal.message(operation(inputSignal.getMessage()));
+        public Object transform(Integer inputMessage) {
+            return operation(inputMessage);
         }
 
         abstract Integer operation(Integer number);

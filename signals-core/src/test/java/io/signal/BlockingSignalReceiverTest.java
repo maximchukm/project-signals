@@ -26,4 +26,26 @@ class BlockingSignalReceiverTest {
         assertEquals(10, recievedSignal.getMessage());
     }
 
+    @Test
+    void testWaitForSignalWithId() {
+        String channelName = "test-channel";
+
+        SignalTransmitter transmitter = new DefaultSignalTransmitter(channelName);
+
+        Signal<String> firstSignal = Signal.message("string test 1");
+        Signal<String> secondSignal = Signal.message("string test 2");
+
+        BlockingSignalReceiver<String> receiver = new BlockingSignalReceiver<>(String.class, secondSignal.getId());
+        receiver.tune(transmitter.getChannel());
+
+        transmitter.transmit(firstSignal);
+        transmitter.transmit(secondSignal);
+
+        Signal<String> recievedSignal = receiver.waitForSignal();
+
+        assertEquals("string test 2", recievedSignal.getMessage());
+
+        transmitter.shutdown();
+    }
+
 }

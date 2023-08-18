@@ -8,13 +8,12 @@ public interface SignalTransformer<T> {
 
     String getOutputChannelName();
 
-    Signal<Object> transform(Signal<T> inputSignal);
+    Object transform(T inputMessage);
 
     default Channel connect(Channel channel) {
-        Flux<Signal<Object>> transmission = channel.getTransmission()
+        Flux<Signal<?>> transmission = channel.getTransmission()
                 .filter(signal -> getInputMessageClass().isAssignableFrom(signal.getMessage().getClass()))
-                .map(signal -> new Signal<>(signal.getId(), getInputMessageClass().cast(signal.getMessage())))
-                .map(this::transform);
+                .map(signal -> new Signal<>(signal.getId(), transform(getInputMessageClass().cast(signal.getMessage()))));
 
         return new Channel(getOutputChannelName(), transmission);
     }

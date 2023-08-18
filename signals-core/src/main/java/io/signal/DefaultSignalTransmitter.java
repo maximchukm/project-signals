@@ -28,7 +28,7 @@ public class DefaultSignalTransmitter implements SignalTransmitter {
     }
 
     @Override
-    public void transmit(Signal<Object> signal) {
+    public void transmit(Signal<?> signal) {
         signalEmitter.emit(signal);
         logger.debug(String.format("Transmitted signal %s", signal));
     }
@@ -39,16 +39,16 @@ public class DefaultSignalTransmitter implements SignalTransmitter {
         signalEmitter.stop();
     }
 
-    private static class FluxEmitter implements Consumer<FluxSink<Signal<Object>>> {
+    private static class FluxEmitter implements Consumer<FluxSink<Signal<?>>> {
 
-        private FluxSink<Signal<Object>> fluxSink;
+        private FluxSink<Signal<?>> fluxSink;
 
         @Override
-        public void accept(FluxSink<Signal<Object>> signalFluxSink) {
+        public void accept(FluxSink<Signal<?>> signalFluxSink) {
             this.fluxSink = signalFluxSink;
         }
 
-        void emit(Signal<Object> signal) {
+        void emit(Signal<?> signal) {
             if (fluxSink != null) {
                 fluxSink.next(signal);
             }

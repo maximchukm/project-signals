@@ -1,6 +1,5 @@
 package io.signal;
 
-import io.signal.spi.Signal;
 import io.signal.spi.SignalTransformer;
 
 import java.util.function.Function;
@@ -32,7 +31,7 @@ public class DefaultSignalTransformer<T> implements SignalTransformer<T> {
     }
 
     @Override
-    public Signal<Object> transform(Signal<T> inputSignal) {
-        return new Signal<>(inputSignal.getId(), transformingFunction.apply(inputSignal.getMessage()));
+    public Object transform(T inputMessage) {
+        return transformingFunction.apply(inputMessage);
     }
 }

@@ -1,6 +1,5 @@
 package io.signal.broadcast.example;
 
-import io.signal.spi.Signal;
 import io.signal.spi.SignalTransformer;
 
 public class MultiplyingTransformer implements SignalTransformer<Integer> {
@@ -25,7 +24,7 @@ public class MultiplyingTransformer implements SignalTransformer<Integer> {
     }
 
     @Override
-    public Signal<Object> transform(Signal<Integer> inputSignal) {
-        return new Signal<>(inputSignal.getId(), inputSignal.getMessage() * factor);
+    public Object transform(Integer inputMessage) {
+        return inputMessage * factor;
     }
 }

@@ -8,7 +8,7 @@ public interface SignalTransmitter {
 
     Channel getChannel();
 
-    void transmit(Signal<Object> signal);
+    void transmit(Signal<?> signal);
 
     void shutdown();
 

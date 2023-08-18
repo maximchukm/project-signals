@@ -1,8 +1,7 @@
 package io.signal.plain.application.example.transformer;
 
-import io.signal.spi.Signal;
-import io.signal.spi.SignalTransformer;
 import io.signal.plain.application.example.message.CustomMessage;
+import io.signal.spi.SignalTransformer;
 
 public class CustomMessageTransformer implements SignalTransformer<CustomMessage> {
 
@@ -17,7 +16,7 @@ public class CustomMessageTransformer implements SignalTransformer<CustomMessage
     }
 
     @Override
-    public Signal<Object> transform(Signal<CustomMessage> inputSignal) {
-        return Signal.message(inputSignal.getMessage().getContent());
+    public Object transform(CustomMessage inputMessage) {
+        return inputMessage.getContent();
     }
 }

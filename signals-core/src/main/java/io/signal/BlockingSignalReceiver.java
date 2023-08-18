@@ -12,13 +12,26 @@ public class BlockingSignalReceiver<T> implements SignalReceiver<T> {
 
     private final Class<T> messageClass;
 
+    private final String signalId;
+
     public BlockingSignalReceiver(Class<T> messageClass) {
         this.messageClass = messageClass;
+        this.signalId = null;
+    }
+
+    public BlockingSignalReceiver(Class<T> messageClass, String signalId) {
+        this.messageClass = messageClass;
+        this.signalId = signalId;
     }
 
     @Override
     public Class<T> getMessageClass() {
         return messageClass;
+    }
+
+    @Override
+    public boolean filter(Signal<T> signal) {
+        return signalId == null || signal.getId().equals(signalId);
     }
 
     @Override
@@ -31,6 +44,7 @@ public class BlockingSignalReceiver<T> implements SignalReceiver<T> {
         future = channel.getTransmission()
                 .filter(signal -> getMessageClass().isAssignableFrom(signal.getMessage().getClass()))
                 .map(signal -> new Signal<>(signal.getId(), getMessageClass().cast(signal.getMessage())))
+                .filter(this::filter)
                 .take(1)
                 .single()
                 .toFuture();
