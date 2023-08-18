@@ -1,15 +1,16 @@
 package io.signal.plain.application.example;
 
-import io.signal.Channel;
-import io.signal.DefaultSignalReceiver;
-import io.signal.DefaultSignalTransmitter;
-import io.signal.Signal;
+import io.signal.*;
+import io.signal.plain.application.example.message.CustomMessage;
 import io.signal.plain.application.example.receiver.AnotherSecondChannelReceiver;
 import io.signal.plain.application.example.receiver.CustomMessageReceiver;
 import io.signal.plain.application.example.receiver.FirstChannelReceiver;
 import io.signal.plain.application.example.receiver.SecondChannelReceiver;
+import io.signal.plain.application.example.transformer.CustomMessageTransformer;
 import io.signal.plain.application.example.transmitter.FirstChannelTransmitter;
 import io.signal.plain.application.example.transmitter.SecondChannelTransmitter;
+import io.signal.spi.Channel;
+import io.signal.spi.Signal;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -46,25 +47,36 @@ public class Application {
         CustomMessageReceiver customMessageReceiver = new CustomMessageReceiver();
         customMessageReceiver.tune(firstChannel);
 
+        // Connect transformer
+
+        CustomMessageTransformer customMessageTransformer = new CustomMessageTransformer();
+        Channel transformerChannel = customMessageTransformer.connect(firstChannelTransmitter.getChannel());
+
         // Run message transmission
 
         defaultTransmitter.transmit(Signal.message("Default Hello World!"));
         firstChannelTransmitter.transmit(Signal.message("First Hello World!"));
-        firstChannelTransmitter.transmit(Signal.message(new CustomMessage()));
+        firstChannelTransmitter.transmit(Signal.message(new CustomMessage("custom message")));
         secondChannelTransmitter.transmit(Signal.message("Second Hello World!"));
+
+        firstChannelReceiver.tune(transformerChannel);
+        firstChannelTransmitter.transmit(Signal.message(new CustomMessage("Transform Hello World!")));
+
+        // Blocking Receiver
+
+        BlockingSignalReceiver<String> blockingSignalReceiver = new BlockingSignalReceiver<>(String.class);
+        blockingSignalReceiver.tune(firstChannel);
+
+        firstChannelTransmitter.transmit(Signal.message("test blocking"));
+        Signal<String> blockingSignal = blockingSignalReceiver.waitForSignal();
+
+        LoggerFactory.getLogger(BlockingSignalReceiver.class).info(blockingSignal.getMessage());
 
         // Shutdown
 
         defaultTransmitter.shutdown();
         firstChannelTransmitter.shutdown();
         secondChannelTransmitter.shutdown();
-    }
-
-    public static class CustomMessage {
-        @Override
-        public String toString() {
-            return "Custom message";
-        }
     }
 
 }

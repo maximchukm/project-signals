@@ -1,15 +1,14 @@
 package io.signal.springframework.boot.starter;
 
-import io.signal.SignalReceiver;
-import io.signal.SignalTransmitter;
+import io.signal.spi.SignalReceiver;
+import io.signal.spi.SignalTransmitter;
+import io.signal.extra.SignalsBroadcast;
 import io.signal.springframework.boot.annotation.Receiver;
 import io.signal.springframework.boot.annotation.Transmitter;
 import jakarta.annotation.PreDestroy;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -19,32 +18,23 @@ import java.util.stream.Collectors;
 @Configuration
 public class SignalsAutoConfiguration {
 
-    private final Map<String, SignalTransmitter> transmittersMap;
+    private final SignalsBroadcast broadcast;
 
     public SignalsAutoConfiguration(List<SignalTransmitter> transmitters, List<SignalReceiver<?>> receivers) {
-        transmittersMap =
+        broadcast = new SignalsBroadcast(
                 transmitters.stream()
                         .filter(it -> it.getClass().isAnnotationPresent(Transmitter.class))
-                        .collect(
-                                Collectors.toMap(
-                                        t -> t.getChannel().getName(),
-                                        Function.identity()
-                                )
-                        );
+                        .collect(Collectors.toList())
+        );
+
         receivers
                 .stream()
                 .filter(it -> it.getClass().isAnnotationPresent(Receiver.class))
-                .forEach(r -> {
-                            SignalTransmitter transmitter = transmittersMap.get(r.getClass().getAnnotation(Receiver.class).channelName());
-                            if (transmitter != null) {
-                                r.tune(transmitter.getChannel());
-                            }
-                        }
-                );
+                .forEach(r -> r.tune(broadcast.getChannel(r.getClass().getAnnotation(Receiver.class).channelName())));
     }
 
     @PreDestroy
     public void shutdown() {
-        transmittersMap.values().forEach(SignalTransmitter::shutdown);
+        broadcast.shutdown();
     }
 }

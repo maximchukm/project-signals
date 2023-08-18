@@ -1,8 +1,8 @@
 package io.signal.plain.application.example.receiver;
 
-import io.signal.Signal;
-import io.signal.SignalReceiver;
-import io.signal.plain.application.example.Application;
+import io.signal.AbstractSignalReceiver;
+import io.signal.plain.application.example.message.CustomMessage;
+import io.signal.spi.Signal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,17 +10,18 @@ import org.slf4j.LoggerFactory;
  * @author Maksym Maksymchuk
  * date 12/13/19
  */
-public class CustomMessageReceiver implements SignalReceiver<Application.CustomMessage> {
+public class CustomMessageReceiver extends AbstractSignalReceiver<CustomMessage> {
 
     private final Logger logger = LoggerFactory.getLogger(CustomMessageReceiver.class);
 
     @Override
-    public Class<Application.CustomMessage> getMessageClass() {
-        return Application.CustomMessage.class;
+    public Class<CustomMessage> getMessageClass() {
+        return CustomMessage.class;
     }
 
     @Override
-    public void receive(Signal<Application.CustomMessage> signal) {
-        logger.info(String.format("signal with id %s is received: %s", signal.getId(), signal.getMessage()));
+    public void receive(Signal<CustomMessage> signal) {
+        logger.info(String.format("signal with id %s is received: %s",
+                signal.getId(), signal.getMessage().getContent()));
     }
 }

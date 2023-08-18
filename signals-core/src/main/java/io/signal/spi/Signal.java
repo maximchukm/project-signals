@@ -1,4 +1,4 @@
-package io.signal;
+package io.signal.spi;
 
 import java.util.UUID;
 
@@ -6,11 +6,11 @@ import java.util.UUID;
  * @author Maxim Maximchuk
  * created on 08.02.2019
  */
-final public class Signal<T> {
+public final class Signal<T> {
 
-    private String id;
+    private final String id;
 
-    private T message;
+    private final T message;
 
     public Signal(String id, T data) {
         this.id = id;

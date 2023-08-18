@@ -1,5 +1,8 @@
 package io.signal;
 
+import io.signal.spi.Channel;
+import io.signal.spi.Signal;
+import io.signal.spi.SignalTransmitter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
@@ -25,7 +28,7 @@ public class DefaultSignalTransmitter implements SignalTransmitter {
     }
 
     @Override
-    public void transmit(Signal<?> signal) {
+    public void transmit(Signal<Object> signal) {
         signalEmitter.emit(signal);
         logger.debug(String.format("Transmitted signal %s", signal));
     }
@@ -36,16 +39,16 @@ public class DefaultSignalTransmitter implements SignalTransmitter {
         signalEmitter.stop();
     }
 
-    private static class FluxEmitter implements Consumer<FluxSink<Signal<?>>> {
+    private static class FluxEmitter implements Consumer<FluxSink<Signal<Object>>> {
 
-        private FluxSink<Signal<?>> fluxSink;
+        private FluxSink<Signal<Object>> fluxSink;
 
         @Override
-        public void accept(FluxSink<Signal<?>> signalFluxSink) {
+        public void accept(FluxSink<Signal<Object>> signalFluxSink) {
             this.fluxSink = signalFluxSink;
         }
 
-        void emit(Signal<?> signal) {
+        void emit(Signal<Object> signal) {
             if (fluxSink != null) {
                 fluxSink.next(signal);
             }

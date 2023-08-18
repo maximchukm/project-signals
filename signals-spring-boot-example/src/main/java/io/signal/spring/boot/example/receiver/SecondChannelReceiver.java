@@ -1,7 +1,7 @@
 package io.signal.spring.boot.example.receiver;
 
-import io.signal.Signal;
-import io.signal.SignalReceiver;
+import io.signal.AbstractSignalReceiver;
+import io.signal.spi.Signal;
 import io.signal.springframework.boot.annotation.Receiver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * date 12/13/19
  */
 @Receiver(channelName = "second")
-public class SecondChannelReceiver implements SignalReceiver<String> {
+public class SecondChannelReceiver extends AbstractSignalReceiver<String> {
     private final Logger logger = LoggerFactory.getLogger(SecondChannelReceiver.class);
 
     @Override

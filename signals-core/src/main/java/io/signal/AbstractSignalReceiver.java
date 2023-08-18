@@ -1,16 +1,13 @@
 package io.signal;
 
-/**
- * @author Maxim Maximchuk
- * created on 08.02.2019
- */
-public interface SignalReceiver<T> {
+import io.signal.spi.Channel;
+import io.signal.spi.Signal;
+import io.signal.spi.SignalReceiver;
 
-    Class<T> getMessageClass();
+public abstract class AbstractSignalReceiver<T> implements SignalReceiver<T> {
 
-    void receive(Signal<T> signal);
-
-    default void tune(Channel channel) {
+    @Override
+    public void tune(Channel channel) {
         channel.getTransmission()
                 .filter(signal -> getMessageClass().isAssignableFrom(signal.getMessage().getClass()))
                 .subscribe(signal ->

@@ -1,4 +1,4 @@
-package io.signal;
+package io.signal.spi;
 
 import reactor.core.publisher.Flux;
 
@@ -10,9 +10,9 @@ public class Channel {
 
     private final String name;
 
-    private final Flux<Signal<?>> transmission;
+    private final Flux<Signal<Object>> transmission;
 
-    public Channel(String name, Flux<Signal<?>> transmission) {
+    public Channel(String name, Flux<Signal<Object>> transmission) {
         this.name = name;
         this.transmission = transmission;
     }
@@ -21,7 +21,8 @@ public class Channel {
         return name;
     }
 
-    public Flux<Signal<?>> getTransmission() {
+    public Flux<Signal<Object>> getTransmission() {
         return transmission;
     }
+
 }

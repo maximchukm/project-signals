@@ -13,6 +13,7 @@
         <module>signals-spring-boot-starter</module>
         <module>signals-plain-application-example</module>
         <module>signals-spring-boot-example</module>
+        <module>signals-broadcast-example</module>
     </modules>
 
     <build>

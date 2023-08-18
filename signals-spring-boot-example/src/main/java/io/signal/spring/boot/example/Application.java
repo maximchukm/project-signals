@@ -1,7 +1,7 @@
 package io.signal.spring.boot.example;
 
-import io.signal.Signal;
-import io.signal.SignalReceiver;
+import io.signal.spi.Signal;
+import io.signal.spi.SignalReceiver;
 import io.signal.spring.boot.example.transmitter.FirstChannelTransmitter;
 import io.signal.spring.boot.example.transmitter.SecondChannelTransmitter;
 import org.springframework.beans.factory.annotation.Autowired;

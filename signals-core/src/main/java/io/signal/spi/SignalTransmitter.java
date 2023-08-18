@@ -1,4 +1,4 @@
-package io.signal;
+package io.signal.spi;
 
 /**
  * @author Maxim Maximchuk
@@ -8,7 +8,7 @@ public interface SignalTransmitter {
 
     Channel getChannel();
 
-    void transmit(Signal<?> signal);
+    void transmit(Signal<Object> signal);
 
     void shutdown();
 

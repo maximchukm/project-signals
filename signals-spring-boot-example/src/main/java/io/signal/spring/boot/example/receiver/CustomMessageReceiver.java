@@ -1,7 +1,7 @@
 package io.signal.spring.boot.example.receiver;
 
-import io.signal.Signal;
-import io.signal.SignalReceiver;
+import io.signal.AbstractSignalReceiver;
+import io.signal.spi.Signal;
 import io.signal.spring.boot.example.Application;
 import io.signal.springframework.boot.annotation.Receiver;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * date 12/13/19
  */
 @Receiver(channelName = "first")
-public class CustomMessageReceiver implements SignalReceiver<Application.CustomMessage> {
+public class CustomMessageReceiver extends AbstractSignalReceiver<Application.CustomMessage> {
 
     private final Logger logger = LoggerFactory.getLogger(CustomMessageReceiver.class);
 

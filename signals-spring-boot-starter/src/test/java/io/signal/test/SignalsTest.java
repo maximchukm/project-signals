@@ -1,6 +1,6 @@
 package io.signal.test;
 
-import io.signal.Signal;
+import io.signal.spi.Signal;
 import io.signal.springframework.boot.starter.SignalsAutoConfiguration;
 import io.signal.test.receiver.AnotherSecondChannelReceiver;
 import io.signal.test.receiver.FirstChannelReceiver;

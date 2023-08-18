@@ -1,7 +1,7 @@
 package io.signal.plain.application.example.receiver;
 
-import io.signal.Signal;
-import io.signal.SignalReceiver;
+import io.signal.AbstractSignalReceiver;
+import io.signal.spi.Signal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * @author Maksym Maksymchuk
  * date 12/13/19
  */
-public class SecondChannelReceiver implements SignalReceiver<String> {
+public class SecondChannelReceiver extends AbstractSignalReceiver<String> {
     private final Logger logger = LoggerFactory.getLogger(SecondChannelReceiver.class);
 
     @Override
