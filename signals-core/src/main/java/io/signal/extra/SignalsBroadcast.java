@@ -2,6 +2,7 @@ package io.signal.extra;
 
 import io.signal.DefaultSignalTransmitter;
 import io.signal.spi.Channel;
+import io.signal.spi.SignalReceiver;
 import io.signal.spi.SignalTransmitter;
 
 import java.util.ArrayList;
@@ -49,6 +50,10 @@ public final class SignalsBroadcast {
         return transmitter;
     }
 
+    public void tuneReceiver(String channelName, SignalReceiver<?> signalReceiver) {
+        signalReceiver.tune(getChannel(channelName));
+    }
+
     public void shutdown() {
         transmittersMap.values().forEach(SignalTransmitter::shutdown);
     }
@@ -66,7 +71,7 @@ public final class SignalsBroadcast {
         protected Builder() {
         }
 
-        public Builder withTransmitter(String channelName) {
+        public Builder transmitterForChannel(String channelName) {
             SignalTransmitter transmitter = new DefaultSignalTransmitter(channelName);
             transmitters.add(transmitter);
             channels.put(transmitter.getChannel().getName(), transmitter.getChannel());
@@ -79,8 +84,8 @@ public final class SignalsBroadcast {
             return this;
         }
 
-        public Builder withTransformingChain(String channelName,
-                                             UnaryOperator<SignalTransformingChain> chainConfigFunc) {
+        public Builder transformingChainForChannel(String channelName,
+                                                   UnaryOperator<SignalTransformingChain> chainConfigFunc) {
             SignalTransformingChain chain =
                     chainConfigFunc.apply(SignalTransformingChain.from(channels.get(channelName)));
             channels.put(chain.getChannel().getName(), chain.getChannel());

@@ -16,8 +16,8 @@ class SignalsBroadcastTest {
         String calculatedChannelName = "calculated-channel";
 
         SignalsBroadcast broadcast = SignalsBroadcast.builder()
-                .withTransmitter(channelName)
-                .withTransformingChain(
+                .transmitterForChannel(channelName)
+                .transformingChainForChannel(
                         channelName,
                         chain ->
                                 chain
@@ -39,13 +39,13 @@ class SignalsBroadcastTest {
         SignalTransmitter transmitter = broadcast.getTransmitter(channelName);
 
         BlockingSignalReceiver<Integer> signalReceiver = new BlockingSignalReceiver<>(Integer.class);
-        signalReceiver.tune(broadcast.getChannel(channelName));
+        broadcast.tuneReceiver(channelName, signalReceiver);
 
         transmitter.transmit(Signal.message(2));
 
         Signal<Integer> originalSignal = signalReceiver.waitForSignal();
 
-        signalReceiver.tune(broadcast.getChannel(calculatedChannelName));
+        broadcast.tuneReceiver(calculatedChannelName, signalReceiver);
 
         transmitter.transmit(Signal.message(2));
 
