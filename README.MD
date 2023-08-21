@@ -101,13 +101,13 @@ For that purpose, there is one more core component **Transformer** that you can 
     Channel transformedChannel = transformer.connect(transmitter.getChannel());
 
     SignalReceiver<String> firstReceiver = new DefaultSignalReceiver<>(
-    String.class,
-    signal -> System.out.printf("First Receiver: received Signal with ID: %s and message: %s%n", signal.getId(), signal.getMessage())
+        String.class,
+        signal -> System.out.printf("First Receiver: received Signal with ID: %s and message: %s%n", signal.getId(), signal.getMessage())
     );
 
     SignalReceiver<String> secondReceiver = new DefaultSignalReceiver<>(
-    String.class,
-    signal -> System.out.printf("Second Receiver: received Signal with ID: %s and message: %s%n", signal.getId(), signal.getMessage())
+        String.class,
+        signal -> System.out.printf("Second Receiver: received Signal with ID: %s and message: %s%n", signal.getId(), signal.getMessage())
     );
 
     firstReceiver.tune(transformedChannel);
