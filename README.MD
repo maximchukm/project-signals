@@ -1,6 +1,6 @@
 ## What is it all about?
 
-In simple words that is a message-driven non-blocking component-based framework powered by [Project Reactor](https://github.com/reactor) plus a little magic.
+In simple words that is a lightweight message-driven non-blocking component-based java framework powered by [Project Reactor](https://github.com/reactor) plus a little magic.
 
 And we are going to talk about that magic, starting from a high-level idea and then drill down to the details.
 
