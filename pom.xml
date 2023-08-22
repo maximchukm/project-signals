@@ -7,7 +7,7 @@
     <groupId>io.projectsignals</groupId>
     <artifactId>signals-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.0</version>
+    <version>0.1.0-alpha</version>
     <modules>
         <module>signals-core</module>
         <module>signals-spring-boot-starter</module>
