@@ -11,9 +11,6 @@
     <modules>
         <module>signals-core</module>
         <module>signals-spring-boot-starter</module>
-        <module>signals-plain-application-example</module>
-        <module>signals-spring-boot-example</module>
-        <module>signals-broadcast-example</module>
         <module>signals-kotlin</module>
     </modules>
 

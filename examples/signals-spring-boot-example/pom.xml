@@ -2,17 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>signals-parent</artifactId>
-        <groupId>io.projectsignals</groupId>
-        <version>0.1.0-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>io.projectsignals.example</groupId>
     <artifactId>signals-spring-boot-example</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
 
     <properties>
         <spring-boot.version>3.1.2</spring-boot.version>
+        <project-signals.version>0.1.0-SNAPSHOT</project-signals.version>
     </properties>
 
     <dependencyManagement>
@@ -37,7 +35,7 @@
         <dependency>
             <groupId>io.projectsignals</groupId>
             <artifactId>signals-spring-boot-starter</artifactId>
-            <version>${project.parent.version}</version>
+            <version>${project-signals.version}</version>
         </dependency>
 
     </dependencies>
