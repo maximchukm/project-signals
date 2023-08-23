@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SignalTransformingChainTest {
+public class SignalTransformingChainTest {
 
     @Test
-    void testChaining() {
+    public void testChaining() {
         DefaultSignalTransmitter transmitter = new DefaultSignalTransmitter("number-generator");
 
         SignalTransformingChain chain =
