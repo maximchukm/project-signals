@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DefaultSignalTransformerTest {
+public class DefaultSignalTransformerTest {
 
     @Test
-    void transform() {
+    public void transform() {
         String inputChannelName = "input-channel";
         String outputChannelName = "output-channel";
 

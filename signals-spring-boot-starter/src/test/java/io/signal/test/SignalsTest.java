@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Maksym Maksymchuk
  * date 12/13/19
  */
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {TestConfiguration.class, SignalsAutoConfiguration.class})
 public class SignalsTest {
 

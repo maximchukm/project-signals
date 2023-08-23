@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BlockingSignalReceiverTest {
+public class BlockingSignalReceiverTest {
 
     @Test
-    void testWaitForSignal() {
+    public void testWaitForSignal() {
         String channelName = "test-channel";
 
         BlockingSignalReceiver<Integer> receiver = new BlockingSignalReceiver<>(Integer.class);
@@ -27,7 +27,7 @@ class BlockingSignalReceiverTest {
     }
 
     @Test
-    void testWaitForSignalWithId() {
+    public void testWaitForSignalWithId() {
         String channelName = "test-channel";
 
         SignalTransmitter transmitter = new DefaultSignalTransmitter(channelName);

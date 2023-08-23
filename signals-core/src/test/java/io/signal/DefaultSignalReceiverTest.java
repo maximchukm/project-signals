@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DefaultSignalReceiverTest {
+public class DefaultSignalReceiverTest {
 
     @Test
-    void testReceiveSignal() {
+    public void testReceiveSignal() {
         String channelName = "test-channel";
         String message = "test message";
 
@@ -29,7 +29,7 @@ class DefaultSignalReceiverTest {
     }
 
     @Test
-    void testReceiveSignalWithFilter() {
+    public void testReceiveSignalWithFilter() {
         String channelName = "test-channel";
 
         SignalTransmitter transmitter = new DefaultSignalTransmitter(channelName);

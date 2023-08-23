@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SignalsBroadcastTest {
+public class SignalsBroadcastTest {
 
     @Test
-    void testSignalsBroadcast() {
+    public void testSignalsBroadcast() {
         String channelName = "test-channel";
         String calculatedChannelName = "calculated-channel";
 

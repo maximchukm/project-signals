@@ -24,7 +24,7 @@ public class SignalsAutoConfiguration {
         broadcast = new SignalsBroadcast(
                 transmitters.stream()
                         .filter(it -> it.getClass().isAnnotationPresent(Transmitter.class))
-                        .collect(Collectors.toList())
+                        .toList()
         );
 
         receivers
